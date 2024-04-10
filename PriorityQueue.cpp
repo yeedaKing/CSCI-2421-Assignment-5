@@ -44,13 +44,17 @@ void PriorityQueue::heapifyDown() {
      */
 
     int n = heap.size();
+
+    // use a bottom-up heapify approach
     for (int i=n/2; i>0; i--) {
         int j = i;
         while (true) {
+            // check if the left and right child values are less than current node's val
             bool flag1 = (2*j < n) ? heap[2*j] < heap[j] : false;
             bool flag2 = (2*j + 1 < n) ? heap[2*j+1] < heap[j] : false;
 
             if (flag1 && flag2) {
+                // choose the smaller of the two to swap with if both vals are less than node's
                 if (heap[2*j] < heap[2*j+1]) {
                 swap(heap[2*j], heap[j]);
                 j *= 2;
