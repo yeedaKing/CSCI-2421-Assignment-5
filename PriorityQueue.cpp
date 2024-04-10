@@ -23,15 +23,58 @@ PriorityQueue::PriorityQueue() {
 
 PriorityQueue::PriorityQueue(const vector<int> arr) {
     heap = {0};
-    // insert the values into the heap one by one
     for (int num: arr) {
-        insert(num);
+        heap.push_back(num);
     }
+    heapifyDown();
 }
 
 bool PriorityQueue::isEmpty() {
     // one-based indexing is used instead of zero-based indexing
     return heap.size() == 1;
+}
+
+void PriorityQueue::heapifyDown() {
+    /**
+     * Private function used by the constructor to create the heap.
+     * Ensures heap properties are maintained; time complexity is O(n).
+     * 
+     *
+     * @return void
+     */
+
+    int n = heap.size();
+    for (int i=n/2; i>0; i--) {
+        int j = i;
+        while (true) {
+            bool flag1 = (2*j < n) ? heap[2*j] < heap[j] : false;
+            bool flag2 = (2*j + 1 < n) ? heap[2*j+1] < heap[j] : false;
+
+            if (flag1 && flag2) {
+                if (heap[2*j] < heap[2*j+1]) {
+                swap(heap[2*j], heap[j]);
+                j *= 2;
+
+                } else {
+                    swap(heap[2*j+1], heap[j]);
+                    j = 2*j + 1;
+                }
+            } else if (flag1) {
+            // case where only the left child is smaller than the node's value
+            swap(heap[2*j], heap[j]);
+            j *= 2;
+
+            } else if (flag2) {
+                // case where only the right child is smaller than the node's value
+                swap(heap[2*j+1], heap[j]);
+                j = 2*j + 1;
+
+            } else {
+                // node is in the correct position, so exit out of the loop
+                break;
+            }
+        }
+    }
 }
 
 void PriorityQueue::insert(int val) {

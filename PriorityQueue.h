@@ -39,6 +39,9 @@ public:
 private:
     // initialize variable
     vector<int> heap;
+
+    // private function
+    void heapifyDown();
 };
 
 #endif
